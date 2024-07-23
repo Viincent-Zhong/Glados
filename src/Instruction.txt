@@ -1,0 +1,57 @@
+OPCODE : 
+
+push const => push a const (int, bool) ontop of the stack 
+    Example :
+        1
+    =>
+        0 push 1
+        1 return
+
+get var : push the value of a var on top of the stack
+    Example :
+        b
+    =>
+        0 get b
+        1 return
+
+call name : call a function with the current stack and push its return value ontop of the stack | empty the stack after usage
+    Example :
+        (eq? 1 0)
+    =>
+        0 push 1
+        1 push 0
+        2 call (eq?)
+        3 return
+    => call pushing false
+
+return : return the first element of the pile | empty the stack after usage
+    Example :
+        0
+    =>
+        0 push 0
+        1 return
+    => returning 0
+
+jumpIfFalse lineToJump : jump to given line if first element of the pile is False
+    Example :
+        (if (eq? x 0) 1 0)
+    =>
+        0 get x
+        1 push 0
+        2 call (eq?)
+        3 jumpIfFalse 7
+        4 push 1
+        5 return
+        6 push 0
+        7 return
+    => call (eq?) returning a bool for the jumpIfFalse to check
+
+deleteEnv name: delete from the env a given name
+    Example :
+        ((lambda (a b) (+ a b)) 1 2)
+    =>
+        0 push 1
+        1 push 2
+        2 call lambda
+        3 deleteEnv lambda
+        4 return
